@@ -144,7 +144,7 @@ function displayAboutCity(adress) {
 
           ///////////// /////////////////////Image background//////////////////////////////////////////
           const mounth = getSeason(obj);
-          const accessKey = '016afc7c3c8b9cfee72e5d73f9ffee70d4820844691a54f6fcface33f1bc6c70';
+          const accessKey = '89af14d56fc41567b9ad9861d2efdc32fa5ccfc89246b4fd974843dfc0a8a3f5';
           const url = `https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=${descriotionWeather},${mounth},${town},${timeOfSutki}&client_id=${accessKey}`;
           async function getLinkToImage() {
             let res = await fetch(url);

@@ -156,8 +156,6 @@ webkitSpeechRecognition.onresult = function(event) {
     document.querySelector('.input-city').value = '';
     displayAboutCity(result[0].transcript);
     document.querySelector('.input-city').value = result[0].transcript;
-  } else {
-    console.log('Промежуточный результат: ', result[0].transcript);
   }
 };
 
