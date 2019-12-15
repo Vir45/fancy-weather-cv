@@ -1,0 +1,29 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "chrome": "72"
+        }
+      }
+    ]
+  ],
+	"plugins": [
+    [
+      "inline-svg",
+      {
+				"ignorePattern": "ignoreAThing",
+        "svgo": {
+          "plugins": [
+            {"cleanupIDs": false},
+            {
+              "removeDoctype": true
+            }
+          ]
+ 
+        }
+      }
+    ]
+  ]
+}

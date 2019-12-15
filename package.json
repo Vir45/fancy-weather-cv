@@ -1,0 +1,56 @@
+{
+  "name": "fancy-weather",
+  "version": "1.0.0",
+  "description": "fancy-weather",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode development --watch",
+    "build": "webpack --mode production",
+    "lint": "eslint src/",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vir45"
+  },
+  "jest": {
+    "verbose": true,
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
+  },
+  "author": "Vova Serko",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-inline-svg": "^1.0.1",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^6.0.0",
+    "jest": "^24.9.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0",
+    "babel-jest": "^24.9.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "core-js": "^3.4.1",
+    "eslint-plugin-jest": "^23.0.3",
+    "mapbox-gl": "^1.5.0"
+  }
+}
