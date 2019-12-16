@@ -28,7 +28,6 @@ function displayAboutCity(adress) {
 
   async function yandexGeoCoder() {
     let url = `https://cors-anywhere.herokuapp.com/https://geocode-maps.yandex.ru/1.x/?apikey=${yandexKey}&format=json&geocode=${adress}&lang=${obj.yandexCodeLang}`;
-    console.log(url)
     let res = await fetch(url);
     let data = await res.json();
     return data;

@@ -10,7 +10,6 @@ export function changeDegreeToFareng() {
 
   document.querySelector('.next-one-temperature').innerHTML = Math.floor((document.querySelector('.next-one-temperature').innerHTML * 9 / 5) + 32);
   document.querySelector('.next-one-temperature').classList.add('current-temperature-next-f');
-  console.log(document.querySelector('.next-one-temperature').classList)
   document.querySelector('.next-two-temperature').innerHTML = Math.floor((document.querySelector('.next-two-temperature').innerHTML * 9 / 5) + 32);
   document.querySelector('.next-one-temperature').classList.add('current-temperature-next-f');
   document.querySelector('.next-three-temperature').innerHTML = Math.floor((document.querySelector('.next-three-temperature').innerHTML * 9 / 5) + 32);

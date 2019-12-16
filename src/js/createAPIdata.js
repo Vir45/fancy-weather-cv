@@ -67,8 +67,6 @@ export function geoFindMe(obj) {
 
     function getWeather() {
       getAPIWeather().then(data => {
-        console.log(data)
-
         if (localStorage.getItem('degree') === 'c' || localStorage.getItem('degree') === null) {
           document.querySelector('.current-temperature p').innerHTML = `${convert(data.currently.temperature)}`;
         } else if (localStorage.getItem('degree') === 'f') {
