@@ -17,6 +17,7 @@ import {
   getTime,
 } from './getTime';
 import { geoFindMe, dataEnglish, dataBelarusian, dataRussian } from './createAPIdata';
+import countryCode from './countryCode';
 
 export const arrOfIcon = [];
 
@@ -130,7 +131,7 @@ async function getIpiinfo() {
 export function getLocatin() {
   getIpiinfo().then(data => {
     if (document.querySelector('.current-location')) {
-      document.querySelector('.current-location').innerHTML = `${data.city}, ${data.country}`;
+      document.querySelector('.current-location').innerHTML = `${data.city}, ${countryCode[data.country]}`;
     }
   })
 }
@@ -144,6 +145,14 @@ document.querySelector('.celsius').addEventListener('click', changeDegreeCelcies
 /////////////////////////////////Search data about city/////////////////////////////////////////////////////////////////////
 
 document.querySelector('.search-button').addEventListener('click', displayAboutCity);
+document.querySelector('.input-city').addEventListener('click', function() {
+  document.addEventListener('keydown', function(event) {
+    if (event.key == 'Enter') {
+      const currentAdress = document.querySelector('.input-city').value;
+      displayAboutCity(currentAdress);
+    }
+  })
+})
 
 ////////////////////////Create Web Speech API//////////////////////
 const WebkitSpeechRecognition = window.webkitSpeechRecognition || window.speechRecognition;

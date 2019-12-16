@@ -27,7 +27,8 @@ function displayAboutCity(adress) {
   }
 
   async function yandexGeoCoder() {
-    let url = `https://cors-anywhere.herokuapp.com/https://geocode-maps.yandex.ru/1.x/?apikey=${yandexKey}&format=json&geocode=${adress}`;
+    let url = `https://cors-anywhere.herokuapp.com/https://geocode-maps.yandex.ru/1.x/?apikey=${yandexKey}&format=json&geocode=${adress}&lang=${obj.yandexCodeLang}`;
+    console.log(url)
     let res = await fetch(url);
     let data = await res.json();
     return data;
@@ -36,6 +37,10 @@ function displayAboutCity(adress) {
 
   function getLagLat() {
     yandexGeoCoder().then(data => {
+      if (data.response.GeoObjectCollection.featureMember[0] === undefined) {
+        alert("I do not know such city, try again");
+        return
+      }
       const indexOfEmptyMark = data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.indexOf(' ');
       const longitude = +data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.slice(0, indexOfEmptyMark);
       const latitude = +data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.slice(indexOfEmptyMark + 1);
@@ -47,11 +52,10 @@ function displayAboutCity(adress) {
       if (document.querySelector('.current-locations')) {
         document.querySelector('.current-locations').remove();
       }
-
       const currentLocation = document.createElement('p');
       currentLocation.classList.add('current-locations');
       document.querySelector('.about-place').prepend(currentLocation);
-      document.querySelector('.current-locations').innerHTML = `${data.response.GeoObjectCollection.metaDataProperty.GeocoderResponseMetaData.request}`;
+      document.querySelector('.current-locations').innerHTML = `${data.response.GeoObjectCollection.featureMember[0].GeoObject.name}, ${data.response.GeoObjectCollection.featureMember[0].GeoObject.description}`;
 
       function addZero(str) {
         if (str.length < 8) {

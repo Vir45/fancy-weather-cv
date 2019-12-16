@@ -4,7 +4,7 @@ import {
   getSeason,
   convert
 } from './getTime';
-import { checkIcon, arrOfIcon, geo_options, getLocatin } from './index'
+import { checkIcon, arrOfIcon, geo_options } from './index'
 
 export const dataEnglish = {
   lang: 'en',
@@ -16,6 +16,7 @@ export const dataEnglish = {
   arrOfMonth: ['January', 'February', 'March', 'April', 'Мay', 'June', 'Julius', 'August', 'September', 'October', 'November', 'December'],
   latitude: 'Latitude',
   longitude: 'Longitude',
+  yandexCodeLang: 'en_RU',
 }
 
 export const dataRussian = {
@@ -28,6 +29,7 @@ export const dataRussian = {
   arrOfMonth: ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'],
   latitude: 'Широта',
   longitude: 'Долгота',
+  yandexCodeLang: 'ru_RU',
 }
 
 export const dataBelarusian = {
@@ -40,6 +42,7 @@ export const dataBelarusian = {
   arrOfMonth: ['Студзеня', 'Лютага', 'Сакавiка', 'Красавiка', 'Мая', 'Чэрвеня', 'Лiпеня', 'Жнiвеня', 'Верасня', 'Кастрычнiка', 'Лiстапада', 'Снежня'],
   latitude: 'Шырата',
   longitude: 'Даўгата',
+  yandexCodeLang: 'be_BY',
 }
 
 
@@ -54,10 +57,9 @@ export function geoFindMe(obj) {
 
     /////////////////////////////////////Weather/////////////////////////////////////////////////////////////////////
 
-    const darkskyToken = '6308687587c9f5012f0b4849eef094e9';
+    const darkskyToken = '4c95abfb6faccbf0e7dc31a4ecd3a2b6';
     const urlDarksky = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${darkskyToken}/${lat},${lng}?lang=${obj.lang}`;
     async function getAPIWeather() {
-      getLocatin();
       let res = await fetch(urlDarksky);
       let data = await res.json();
       return data;
@@ -65,6 +67,7 @@ export function geoFindMe(obj) {
 
     function getWeather() {
       getAPIWeather().then(data => {
+        console.log(data)
 
         if (localStorage.getItem('degree') === 'c' || localStorage.getItem('degree') === null) {
           document.querySelector('.current-temperature p').innerHTML = `${convert(data.currently.temperature)}`;
