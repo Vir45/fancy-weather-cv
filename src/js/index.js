@@ -17,7 +17,7 @@ import {
   getTime,
 } from './getTime';
 import { geoFindMe, dataEnglish, dataBelarusian, dataRussian } from './createAPIdata';
-import countryCode from './countryCode';
+// import countryCode from './countryCode';
 
 export const arrOfIcon = [];
 
@@ -79,6 +79,61 @@ const microphoneIcon = new Image();
 microphoneIcon.src = voice;
 document.querySelector('.voice-button').prepend(microphoneIcon)
 
+///////////////////////////////Current time///////////////////////
+
+document.querySelector('.current-time').innerHTML = getTime(objOfLanguage);
+
+export let timerId = setInterval(function() {
+  if (document.querySelector('.current-time')) {
+    document.querySelector('.current-time').innerHTML = getTime(objOfLanguage);
+  }
+}, 1000);
+
+/////////////////////////////////Current place//////////////////////////////////////
+
+const tokenIpiinfo = '941ae0fd6067fc';
+async function getIpiinfo() {
+  let url = `https://ipinfo.io/json?token=${tokenIpiinfo}`;
+  let res = await fetch(url);
+  let data = await res.json();
+  return data;
+}
+
+
+export function getLocatin() {
+  getIpiinfo().then(data => {
+    const yandexKey = "03342ebc-5fa9-454e-b59e-577fc2b9de5b";
+    const dat = data;
+    let objOfLanguage;
+    if (localStorage.getItem('lang') === 'en' || localStorage.getItem('lang') === null) {
+      objOfLanguage = dataEnglish;
+    } else if (localStorage.getItem('lang') === 'ru') {
+      objOfLanguage = dataRussian;
+    } else if (localStorage.getItem('lang') === 'be') {
+      objOfLanguage = dataBelarusian;
+    }
+    async function yandexGeoCoder() {
+      let url = `https://cors-anywhere.herokuapp.com/https://geocode-maps.yandex.ru/1.x/?apikey=${yandexKey}&format=json&geocode=${dat.city}&lang=${objOfLanguage.yandexCodeLang}`;
+      let res = await fetch(url);
+      let data = await res.json();
+      return data;
+    }
+
+    if (document.querySelector('.current-location')) {
+      yandexGeoCoder().then(data => {
+        if (data.response.GeoObjectCollection.featureMember[0] === undefined) {
+          alert("I do not know such city, try again");
+          return
+        }
+        document.querySelector('.current-location').innerHTML = `${data.response.GeoObjectCollection.featureMember[0].GeoObject.name}, ${data.response.GeoObjectCollection.featureMember[0].GeoObject.description}`;
+        // document.querySelector('.current-location').innerHTML = `${data.city}, ${countryCode[data.country]}`;
+      });
+    }
+  })
+}
+
+getLocatin()
+
 ///////////////////////////////////////////Get current weather and map///////////////////////////////////////
 
 export const geo_options = {
@@ -107,36 +162,6 @@ export function convert(value) {
 }
 
 geoFindMe(objOfLanguage);
-
-///////////////////////////////Current time///////////////////////
-
-document.querySelector('.current-time').innerHTML = getTime(objOfLanguage);
-
-export let timerId = setInterval(function() {
-  if (document.querySelector('.current-time')) {
-    document.querySelector('.current-time').innerHTML = getTime(objOfLanguage);
-  }
-}, 1000);
-
-/////////////////////////////////Current place//////////////////////////////////////
-
-const tokenIpiinfo = '941ae0fd6067fc';
-async function getIpiinfo() {
-  let url = `https://ipinfo.io/json?token=${tokenIpiinfo}`;
-  let res = await fetch(url);
-  let data = await res.json();
-  return data;
-}
-
-export function getLocatin() {
-  getIpiinfo().then(data => {
-    if (document.querySelector('.current-location')) {
-      document.querySelector('.current-location').innerHTML = `${data.city}, ${countryCode[data.country]}`;
-    }
-  })
-}
-
-getLocatin()
 
 /////////////////////Changedegree///////////////////////////
 document.querySelector('.fahrenheit').addEventListener('click', changeDegreeToFareng);

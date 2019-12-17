@@ -5,18 +5,17 @@ import {
   convert
 } from './getTime';
 import { checkIcon, arrOfIcon, getLocatin, timerId } from './index';
-import { dataEnglish, dataRussian } from './createAPIdata';
+import { dataEnglish, dataRussian, dataBelarusian } from './createAPIdata';
 
 
 function displayAboutCity(adress) {
   let obj;
   if (localStorage.getItem('lang') === 'be') {
-    alert("Intl dont work with Belarusian")
-    obj = dataRussian;
+    obj = dataBelarusian;
   }
   if (localStorage.getItem('lang') === 'en' || localStorage.getItem('lang') === null) {
     obj = dataEnglish;
-  } else if (localStorage.getItem('lang') === 'ru' || localStorage.getItem('lang') === 'be') {
+  } else if (localStorage.getItem('lang') === 'ru') {
     obj = dataRussian;
   }
 
@@ -87,22 +86,26 @@ function displayAboutCity(adress) {
             langForOptions = 'ru';
           }
 
-          const options = (langForOptions, { timeZone: data.timezone, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+          const options = new Intl.DateTimeFormat(langForOptions, { timeZone: data.timezone, weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
           const optionForHour = { timeZone: data.timezone, hour: 'numeric' };
           const optionForWeekday = { timeZone: data.timezone, weekday: 'long' };
           let timeOfSutki = 'day';
           if (Number(currentTime.toLocaleString(langForOptions, optionForHour)) >= 19) {
             timeOfSutki = 'night'
           }
-          const currentIndexDayOfWeek = obj.arrOfDay.indexOf(currentTime.toLocaleString(langForOptions, optionForWeekday)[0].toUpperCase() + currentTime.toLocaleString(langForOptions, optionForWeekday).slice(1));
 
           clearInterval(timerId);
 
           function getTime() {
-            return currentTime.toLocaleString(langForOptions, options)
+            return options.format(currentTime)
           }
 
-          document.querySelector('.current-time').innerHTML = getTime(obj);
+          document.querySelector('.current-time').innerHTML = getTime();
+          if (langForOptions === 'be') {
+            langForOptions = 'ru';
+          }
+
+          const currentIndexDayOfWeek = obj.arrOfDay.indexOf(currentTime.toLocaleString(langForOptions, optionForWeekday)[0].toUpperCase() + currentTime.toLocaleString(langForOptions, optionForWeekday).slice(1));
 
           if (localStorage.getItem('degree') === 'c' || localStorage.getItem('degree') === null) {
             document.querySelector('.current-temperature p').innerHTML = `${convert(data.currently.temperature)}`;

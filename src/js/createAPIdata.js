@@ -141,6 +141,7 @@ export function geoFindMe(obj) {
     document.querySelector('.data-location').innerHTML = `${obj.latitude}: ${String(latitude).slice(0, 2)}°${String(latitude).slice(3, 5)}'<br>${obj.longitude}: ${String(longitude).slice(0, 2)}°${String(longitude).slice(3, 5)}'`
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoidm92YTAxMyIsImEiOiJjazNha2Y2MHEwOWE0M2dsZHprYzJwNmI0In0.4tU2OcH0O-plxljActzq2A';
+
     /* eslint-disable no-unused-vars */
     let map = new mapboxgl.Map({
       container: 'maps', // container id
